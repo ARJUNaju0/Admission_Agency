@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Aju Agency | Future of Admissions{% endblock %}</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#487677ff',    
+                        secondary: '#E07A5F',  
+                        background: '#FDFCF8', 
+                        accent: '#D4A373',     
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-background text-primary font-sans antialiased flex flex-col min-h-screen">
+
+    {% include 'includes/navbar.html' %}
+
+    <main class="flex-grow">
+        {% if messages %}
+            <div class="container mx-auto px-6 mt-4">
+                {% for message in messages %}
+                    <div class="p-4 mb-4 rounded-lg flex items-center gap-3 shadow-sm
+                        {% if message.tags == 'error' %}bg-red-50 text-red-800 border-l-4 border-red-500
+                        {% elif message.tags == 'success' %}bg-green-50 text-green-800 border-l-4 border-green-500
+                        {% else %}bg-blue-50 text-blue-800 border-l-4 border-blue-500{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+</body>
+</html>

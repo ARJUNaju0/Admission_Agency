@@ -1,0 +1,398 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ college.name }} | College Details{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50">
+    <!-- Hero Section -->
+    <div class="relative h-96 bg-gradient-to-r from-primary/90 to-primary/70">
+        {% if college.banner_image %}
+            <img src="{{ college.banner_image.url }}" alt="{{ college.name }}" 
+                 class="absolute inset-0 w-full h-full object-cover opacity-30">
+        {% endif %}
+        
+        <div class="relative container mx-auto px-6 h-full flex items-center">
+            <div class="text-white">
+                <div class="flex items-center gap-4 mb-4">
+                    {% if college.logo %}
+                        <img src="{{ college.logo.url }}" alt="{{ college.name }}" 
+                             class="w-20 h-20 bg-white rounded-lg p-2 object-contain">
+                    {% endif %}
+                    <div>
+                        <h1 class="text-4xl md:text-5xl font-serif font-bold mb-2">{{ college.name }}</h1>
+                        <div class="flex items-center gap-4 text-lg">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                {{ college.get_city_display }}
+                            </span>
+                            {% if college.nirf_rank %}
+                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-bold">
+                                    NIRF Rank #{{ college.nirf_rank }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <p class="text-sm opacity-90">Overall Rating</p>
+                        <p class="text-2xl font-bold">{{ college.overall_rating }}/5</p>
+                        <div class="flex text-yellow-300">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= college.overall_rating %}
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                {% else %}
+                                    <svg class="w-4 h-4 text-gray-400" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <p class="text-sm opacity-90">Placement Rate</p>
+                        <p class="text-2xl font-bold">{{ college.placement_percentage }}%</p>
+                        <p class="text-xs opacity-75">Students Placed</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <p class="text-sm opacity-90">Avg Package</p>
+                        <p class="text-2xl font-bold">₹{{ college.average_package }} LPA</p>
+                        <p class="text-xs opacity-75">Highest: ₹{{ college.highest_package }} LPA</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <p class="text-sm opacity-90">Established</p>
+                        <p class="text-2xl font-bold">{{ college.established_year }}</p>
+                        <p class="text-xs opacity-75">{{ college.get_college_type_display }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- About Section -->
+                <section class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-2xl font-serif font-bold mb-4 text-primary">About {{ college.name }}</h2>
+                    <p class="text-gray-700 leading-relaxed">{{ college.description }}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Type</span>
+                                <span class="font-medium">{{ college.get_college_type_display }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Affiliated To</span>
+                                <span class="font-medium">{{ college.affiliated_to }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Approved By</span>
+                                <span class="font-medium">{{ college.approved_by }}</span>
+                            </div>
+                            {% if college.accreditation %}
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Accreditation</span>
+                                <span class="font-medium">{{ college.accreditation }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Campus Area</span>
+                                <span class="font-medium">{{ college.campus_area }} acres</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Total Students</span>
+                                <span class="font-medium">{{ college.total_students }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Faculty Count</span>
+                                <span class="font-medium">{{ college.faculty_count }}</span>
+                            </div>
+                            {% if college.naac_grade %}
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">NAAC Grade</span>
+                                <span class="font-medium">{{ college.naac_grade }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Courses Section -->
+                <section class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-2xl font-serif font-bold mb-4 text-primary">Courses & Programs</h2>
+                    
+                    {% if college.courses.exists %}
+                        <div class="space-y-4">
+                            {% for course in college.courses.all %}
+                                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h3 class="font-bold text-lg">{{ course.name }}</h3>
+                                            <div class="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                                                <span class="bg-gray-100 px-2 py-1 rounded">{{ course.get_level_display }}</span>
+                                                <span class="bg-gray-100 px-2 py-1 rounded">{{ course.get_stream_display }}</span>
+                                                <span>{{ course.duration_years }} years</span>
+                                            </div>
+                                            <p class="text-gray-700 mt-2">{{ course.description|truncatewords:30 }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-2xl font-bold text-primary">₹{{ course.per_year_fees }}</p>
+                                            <p class="text-sm text-gray-600">per year</p>
+                                            <p class="text-xs text-gray-500 mt-1">{{ course.seats_available }} seats available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">Course information not available.</p>
+                    {% endif %}
+                </section>
+
+                <!-- Facilities Section -->
+                {% if college.facilities %}
+                <section class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-2xl font-serif font-bold mb-4 text-primary">Campus Facilities</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {% for facility in college.facilities %}
+                            <div class="flex items-center gap-3 p-3 border rounded-lg">
+                                <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-sm font-medium">{{ facility }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Reviews Section -->
+                <section class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-2xl font-serif font-bold mb-4 text-primary">Student Reviews</h2>
+                    
+                    {% if college.reviews.exists %}
+                        <div class="space-y-4">
+                            {% for review in college.reviews.all|slice:":5" %}
+                                <div class="border rounded-lg p-4">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h4 class="font-bold">{{ review.reviewer_name }}</h4>
+                                            <p class="text-sm text-gray-600">{{ review.course_studied }} • {{ review.batch_year }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="flex text-yellow-400 text-sm">
+                                                {% for i in "12345" %}
+                                                    {% if forloop.counter <= review.overall_rating %}
+                                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                        </svg>
+                                                    {% else %}
+                                                        <svg class="w-4 h-4 text-gray-300" viewBox="0 0 20 20">
+                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                        </svg>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <p class="text-sm text-gray-600">{{ review.overall_rating }}/5</p>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-semibold mb-2">{{ review.title }}</h5>
+                                    <p class="text-gray-700">{{ review.review_text|truncatewords:50 }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {% if college.total_reviews > 5 %}
+                            <button class="mt-4 text-primary font-semibold hover:underline">
+                                View all {{ college.total_reviews }} reviews →
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-gray-500">No reviews yet. Be the first to review!</p>
+                    {% endif %}
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                
+                <!-- Contact Information -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-serif font-bold mb-4 text-primary">Contact Information</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <div>
+                                <p class="text-sm text-gray-600">Address</p>
+                                <p class="font-medium">{{ college.address }}</p>
+                                <p class="text-sm">{{ college.get_city_display }} - {{ college.pincode }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <div>
+                                <p class="text-sm text-gray-600">Phone</p>
+                                <p class="font-medium">{{ college.phone }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <div>
+                                <p class="text-sm text-gray-600">Email</p>
+                                <p class="font-medium">{{ college.email }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                            <div>
+                                <p class="text-sm text-gray-600">Website</p>
+                                <a href="{{ college.website }}" target="_blank" class="font-medium text-primary hover:underline">
+                                    {{ college.website }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Recruiters -->
+                {% if college.top_recruiters %}
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-serif font-bold mb-4 text-primary">Top Recruiters</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        {% for recruiter in college.top_recruiters %}
+                            <div class="bg-gray-50 rounded-lg p-3 text-center text-sm font-medium">
+                                {{ recruiter }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-serif font-bold mb-4 text-primary">Take Action</h3>
+                    <div class="space-y-3">
+                        <button onclick="openInquiryModal()" class="w-full bg-secondary text-white py-3 rounded-lg font-bold hover:bg-opacity-90 transition">
+                            Send Inquiry
+                        </button>
+                        <button class="w-full border border-primary text-primary py-3 rounded-lg font-bold hover:bg-primary hover:text-white transition">
+                            Schedule Visit
+                        </button>
+                        <button class="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-50 transition">
+                            Download Brochure
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inquiry Modal -->
+<div id="inquiryModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-serif font-bold text-primary">Send Inquiry</h3>
+            <button onclick="closeInquiryModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <form method="POST" action="{% url 'create_inquiry' college.id %}">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" name="student_name" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" name="phone" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Course Interested</label>
+                    <select name="course" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent">
+                        <option value="">Select a course</option>
+                        {% for course in college.courses.all %}
+                            <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                    <textarea name="message" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                              placeholder="Any specific questions?"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-secondary text-white py-3 rounded-lg font-bold hover:bg-opacity-90 transition">
+                    Send Inquiry
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openInquiryModal() {
+    document.getElementById('inquiryModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeInquiryModal() {
+    document.getElementById('inquiryModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+document.getElementById('inquiryModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeInquiryModal();
+    }
+});
+</script>
+{% endblock %}

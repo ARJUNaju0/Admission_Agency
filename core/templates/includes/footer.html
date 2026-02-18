@@ -1,0 +1,43 @@
+<footer class="bg-primary text-white/80 py-12 mt-20 border-t border-white/10">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="col-span-1 md:col-span-1">
+                <h3 class="font-serif text-xl font-bold text-white mb-4">Ivy League Tech</h3>
+                <p class="text-sm leading-relaxed text-gray-400">
+                    Bridging the gap between students and their dream institutions with precision data and expert guidance.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{% url 'college_list' %}" class="hover:text-accent transition">Browse Colleges</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Top Courses</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Admission Guide</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4">Top Cities</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{% url 'college_list' %}?city=Bengaluru" class="hover:text-accent transition">Colleges in Bengaluru</a></li>
+                    <li><a href="{% url 'college_list' %}?city=Mysuru" class="hover:text-accent transition">Colleges in Mysuru</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4">Contact Agents</h4>
+                <p class="text-sm text-gray-400 mb-2">Need help? Reach out to us.</p>
+                <a href="mailto:support@agency.com" class="text-accent hover:underline text-sm">support@agency.com</a>
+            </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <p>&copy; {% now "Y" %} Aju Agency. All rights reserved.</p>
+            <div class="space-x-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
