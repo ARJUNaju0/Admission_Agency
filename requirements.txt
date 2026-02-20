@@ -1,53 +1,16 @@
-# Core Django
-Django==5.0.6
-djangorestframework==3.15.1
+Django==6.0.1
+djangorestframework==3.16.1
+django-filter==25.2
 
-# MongoDB Integration
-djongo==1.3.6
-pymongo==4.6.2
-sqlparse==0.2.4
+asgiref==3.11.0
+dj-database-url==3.1.2
+python-dotenv==1.2.1
 
-# Authentication & Security
-djangorestframework-simplejwt==5.3.1
-django-cors-headers==4.3.1
+gunicorn==25.1.0
+packaging==26.0
+pillow==12.1.1
+psycopg2-binary==2.9.11
 
-# Environment Variables
-python-dotenv==1.0.1
-
-# Email Service (Resend)
-resend==0.8.0
-django-anymail[resend]==11.0
-
-# Web Scraping
-beautifulsoup4==4.12.3
-requests==2.31.0
-lxml==5.1.0
-selenium==4.18.1
-
-# Image Processing
-Pillow==10.2.0
-
-# Data Processing
-pandas==2.2.1
-numpy==1.26.4
-
-# API Documentation
-drf-yasg==1.21.7
-
-# Utilities
-django-filter==24.1
-django-crispy-forms==2.1
-crispy-bootstrap5==2.0.0
-python-dateutil==2.9.0
-
-# Testing
-pytest==8.1.1
-pytest-django==4.8.0
-faker==24.1.0
-
-# Production
-gunicorn==21.2.0
-whitenoise==6.6.0
-
-# Monitoring
-django-debug-toolbar==4.3.0
+sqlparse==0.5.5
+tzdata==2025.3
+whitenoise==6.11.0
